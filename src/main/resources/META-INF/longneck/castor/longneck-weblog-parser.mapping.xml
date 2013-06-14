@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<c:mapping xmlns:c="http://castor.exolab.org/"
+           xmlns:l="urn:hu.sztaki.ilab.longneck:1.0">
+
+  <!-- weblog parser source -->
+  <c:class name="hu.sztaki.ilab.longneck.weblog.parser.WeblogParserSource">
+    <c:map-to xml="weblog-parser-source" ns-uri="urn:hu.sztaki.ilab.longneck:1.0"/>
+      
+	<c:field name="name" type="string">
+      <c:bind-xml name="name" node="attribute" />
+    </c:field>
+  </c:class>
+
+  <!-- weblog file source -->
+  <c:class name="hu.sztaki.ilab.longneck.weblog.parser.WeblogFileSource">
+    <c:map-to xml="weblog-file-source" ns-uri="urn:hu.sztaki.ilab.longneck:1.0"/>
+      
+	<c:field name="name" type="string">
+      <c:bind-xml name="name" node="attribute" />
+    </c:field>
+  </c:class>
+  
+  <!-- weblog line processor -->
+  <c:class name="hu.sztaki.ilab.longneck.process.block.WeblogLine"
+      extends="hu.sztaki.ilab.longneck.process.block.AbstractAtomicBlock">
+    <c:map-to xml="weblog-line" ns-uri="urn:hu.sztaki.ilab.longneck:1.0"/>
+  </c:class>
+
+</c:mapping>

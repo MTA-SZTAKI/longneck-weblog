@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log-format xmlns="urn:parser" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="urn:parser ../../main/resources/META-INF/longneck/parser/config.xsd">
+
+    <!-- Common Log Format (CLF) -->	 
+    <log-config>%v %h %u %l %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\" \"%{Cookie}i\" \"%{Cookie}n\"</log-config>
+    
+    <url-decoding-charset>ISO-8859-1</url-decoding-charset>
+
+    <create-url-parameters>true</create-url-parameters>
+
+</log-format>

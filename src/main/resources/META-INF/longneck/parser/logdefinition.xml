@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log-format-definition xmlns="urn:parser" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="urn:parser ../parser/logdefinition.xsd">
+
+  <log-elements-definition>
+
+      <log-element-definition>
+      <type>%v</type>
+      <name>virtualhost</name>
+      <regex>(\s*\S+)</regex>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%h</type>
+      <name>clientip</name>
+      <regex>([\d.]+|null|-)</regex>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%l</type>
+      <name>identity</name>
+      <regex>(\S+)</regex>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%u</type>
+      <name>user</name>
+      <regex>(\S+)</regex>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%t</type>
+      <name>time</name>
+      <regex>\[([\w:/]+\s[+\\-]\d{4})\]</regex>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%r</type>
+      <name>request</name>
+      <regex>(.+)</regex>
+      <postprocessors>
+        <postprocessor>
+          <type>SPLIT_REQUEST</type>
+          <field-list>virtualhost</field-list>
+          <!--<caching>false</caching>-->
+        </postprocessor>
+        <postprocessor>
+          <apply-to-postfixed>Url</apply-to-postfixed>
+          <type>URL_PARAMS</type>
+          <!--<caching>false</caching>-->
+        </postprocessor>
+      </postprocessors>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%s</type>
+      <name>status</name>
+      <regex>(\d{3})</regex>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%b</type>
+      <name>bytesSent</name>
+      <regex>(\d+|\-)</regex>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%{Referer}i</type>
+      <name>refererUrl</name>
+      <regex>(.*)</regex>
+      <postprocessors>
+        <postprocessor>
+          <type>URL_PARAMS</type>
+          <!--<caching>false</caching>-->
+        </postprocessor>
+      </postprocessors>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%{User-agent}i</type>
+      <name>userAgent</name>
+      <regex>(.+)</regex>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%{Cookie}i</type>
+      <name>requestCookie</name>
+      <regex>(.*)</regex>
+    </log-element-definition>
+
+    <log-element-definition>
+      <type>%{Cookie}n</type>
+      <name>responseCookie</name>
+      <regex>(.+)</regex>
+    </log-element-definition>
+
+    <!-- Special log element -->
+    <complex-log-element-definition>
+      <name>complexLogElement</name>
+      <regex>(.+)</regex>
+    </complex-log-element-definition>
+
+  </log-elements-definition>
+
+</log-format-definition>

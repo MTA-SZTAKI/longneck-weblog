@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="urn:parser" 
+           xmlns:parser="urn:parser" 
+           elementFormDefault="qualified"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+           jaxb:version="2.0">
+	
+  <xs:complexType name="log-element-def-type">
+    <xs:complexContent>
+      <xs:extension base="parser:log-element-base-type">
+        <xs:sequence>
+          <xs:element name="regex" type="parser:nonempty-type" />
+          <xs:element name="postprocessors" type="parser:post-processors-type" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+    
+  <xs:complexType name="log-element-def-type-arbitrary">
+    <xs:complexContent>
+      <xs:extension base="parser:log-element-base-type">
+        <xs:sequence>
+          <xs:element name="regex" type="parser:nonempty-type" minOccurs="0" maxOccurs="1" />
+          <xs:element name="postprocessors" type="parser:post-processors-type" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="post-process-enum-type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NONE"></xs:enumeration>
+      <xs:enumeration value="URL_PARAMS"></xs:enumeration>
+      <xs:enumeration value="SPLIT_REQUEST"></xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="post-process-fieldlist">
+    <xs:list itemType="xs:string" />
+  </xs:simpleType>
+
+  <xs:complexType name="post-processors-type">
+    <xs:sequence>
+      <xs:element name="postprocessor" type="parser:post-process-type" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="post-process-type">
+    <xs:sequence>
+      <xs:element name="apply-to-postfixed" type="parser:nonempty-type" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="type" type="parser:post-process-enum-type" />
+      <xs:element name="field-list" type="parser:post-process-fieldlist" minOccurs="0" maxOccurs="1" />
+      <!--default caching is false.-->
+      <xs:element name="caching" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="log-element-base-type">
+    <xs:sequence>
+      <xs:element name="type" type="parser:nonempty-type" />
+      <xs:element name="name" type="parser:nonempty-type" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="nonempty-type">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(.+)"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

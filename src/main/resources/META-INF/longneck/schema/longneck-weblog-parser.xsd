@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:tns="urn:hu.sztaki.ilab.longneck:1.0"
+           targetNamespace="urn:hu.sztaki.ilab.longneck:1.0" 
+           elementFormDefault="qualified">
+  
+  <!-- weblog source attribute group -->
+  <xs:attributeGroup name="weblogSourcerAttrGroup">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:attributeGroup>
+
+  <xs:complexType name="weblogSourceType">
+    <xs:complexContent>
+	  <xs:extension base="tns:sourceType">
+	    <xs:attributeGroup ref="tns:weblogSourcerAttrGroup"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- weblog file source -->
+  <xs:element name="weblog-file-source" type="tns:weblogSourceType" substitutionGroup="tns:abstract-source"/>
+  
+  <!-- weblog parser source -->
+  <xs:element name="weblog-parser-source" type="tns:weblogSourceType" substitutionGroup="tns:abstract-source"/>
+  
+  <!-- process log line -->
+  <xs:complexType name="weblogLineType">
+    <xs:complexContent>
+      <xs:extension base="tns:atomicBlockType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:element name="weblog-line" type="tns:weblogLineType"  substitutionGroup="tns:abstract-block"/>
+
+</xs:schema>
+

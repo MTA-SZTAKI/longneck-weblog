@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="urn:parser" 
+	xmlns:parser="urn:parser" 
+	elementFormDefault="qualified"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+	jaxb:version="2.0">
+
+	<xs:include schemaLocation="parser.xsd" />
+
+	<xs:element name="log-format-definition">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="parser:log-elements-definition"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="log-elements-definition">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="log-element-definition" type="parser:log-element-def-type-arbitrary"
+					minOccurs="1" maxOccurs="unbounded" />
+				<xs:element name="complex-log-element-definition" type="parser:complex-log-element-def-type"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="complex-log-element-def-type">
+		<xs:sequence>
+			<xs:element name="name" type="parser:nonempty-type" />
+			<xs:element name="regex" type="parser:nonempty-type" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

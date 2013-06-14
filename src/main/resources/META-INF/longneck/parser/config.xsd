@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:parser"
+  xmlns:parser="urn:parser" elementFormDefault="qualified" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  jaxb:version="2.0">
+
+  <xs:include schemaLocation="parser.xsd" />
+
+  <xs:element name="log-format">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="log-config" type="parser:nonempty-type" />
+        <!--default url-decoding-charset is UTF-8-->
+        <xs:element name="url-decoding-charset" type="parser:url-decoding-charset-enum-type" minOccurs="0" maxOccurs="1"/>
+        <!--default it isn't another decoding caharacterset. It functioned independent from the url-decoding-charset,
+        it is possible to give only url-decoding-charset2 coding, that default codig will remain UTF-8. -->
+        <xs:element name="url-decoding-charset2" type="parser:url-decoding-charset-enum-type" minOccurs="0" maxOccurs="1"/>
+        <!--default create-url-parametes is true-->
+        <xs:element name="create-url-parameters" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="parser:log-elements"  minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:simpleType name="url-decoding-charset-enum-type">
+    <xs:restriction base="xs:string">
+      <!--Seven-bit ASCII, a.k.a. ISO646-US, a.k.a. the Basic Latin block of the Unicode character set-->
+      <xs:enumeration value="US-ASCII"></xs:enumeration>
+      <!--ISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1-->
+      <xs:enumeration value="ISO-8859-1"></xs:enumeration>
+      <!-- DEFAULT!!! Eight-bit UCS Transformation Format-->
+      <xs:enumeration value="UTF-8"></xs:enumeration>
+      <!--Sixteen-bit UCS Transformation Format, big-endian byte order-->
+      <xs:enumeration value="UTF-16BE"></xs:enumeration>
+      <!--Sixteen-bit UCS Transformation Format, big-endian byte order-->
+      <xs:enumeration value="UTF-16LE"></xs:enumeration>
+      <!--Sixteen-bit UCS Transformation Format, byte order identified by an optional byte-order mark-->
+      <xs:enumeration value="UTF-16"></xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="log-elements">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="log-element" type="parser:log-element-def-type-arbitrary" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
