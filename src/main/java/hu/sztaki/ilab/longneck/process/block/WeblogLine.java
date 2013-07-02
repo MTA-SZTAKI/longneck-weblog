@@ -38,7 +38,7 @@ public class WeblogLine extends AbstractAtomicBlock {
                 String executedPattern = logParser.appliedPattern.pattern();
                 throw new CheckError(
                         new CheckResult(this, false, this.getClass().getName().toString(), executedPattern,
-                        String.format("<Weblog-parser-source> is not able to parse line: '%1$s'", value)));
+                        String.format("Weblog parser is unable to parse line: '%1$s'", value)));
             }
         }
     }

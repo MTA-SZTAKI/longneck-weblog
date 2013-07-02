@@ -84,7 +84,7 @@ public class LogParser extends AbstractSourceInfoContainer {
             if (!m1.matches() || attributesList.size() != m1.groupCount()) {
                 // Not match the line to expected format.
                 throw new InputMismatchException(String.format(
-                        "Logformat/logentries mismatch. <Weblog-parser-source> is not able to parse line:\n '%1$s'\n", input));
+                        "Log format mismatch, weblog parser is unable to parse line:\n '%1$s'\n", input));
             }
 
             for (int i = 1; i != m1.groupCount() + 1; i++) {
