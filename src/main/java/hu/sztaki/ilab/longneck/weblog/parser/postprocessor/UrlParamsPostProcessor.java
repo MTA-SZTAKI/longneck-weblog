@@ -195,13 +195,16 @@ public class UrlParamsPostProcessor extends AbstractCachingPostProcessor impleme
         }
 
         // encoding 1:
-        sb.deleteCharAt(0);
+        if (sb.length() > 0) {
+            sb.deleteCharAt(0);
+        }
         Field f = new Field(elementName + ATTR_PARAM_POSTFIX, sb.toString());
         urlFragmentFields.add(f);
 
         // encoding 2:
         if (userdefined_charset2 != null) {
-            sb2.deleteCharAt(0);
+            if (sb.length() > 0)
+                sb2.deleteCharAt(0);
             f = new Field(elementName + ATTR_PARAM_POSTFIX_2, sb2.toString());
             urlFragmentFields.add(f);
         }
