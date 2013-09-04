@@ -235,6 +235,8 @@ public class LogParserFactory {
 
     /**
      * Removes Apache LogFormat placeholder modifiers from the configuration line.
+     * 
+     * For example, removes the '>' character from the "%>s" placeholder.
      *
      * Note: See Modifiers at http://httpd.apache.org/docs/X.X/mod/mod_log_config.html
      *

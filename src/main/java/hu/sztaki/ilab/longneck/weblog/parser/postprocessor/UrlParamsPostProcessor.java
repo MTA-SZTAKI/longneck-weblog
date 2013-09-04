@@ -91,7 +91,7 @@ public class UrlParamsPostProcessor extends AbstractCachingPostProcessor impleme
             Record record, boolean caching) {
 
         if (elementValue == null) {
-            LOG.warn(String.format("Couldn't postprocess field %1$s . No value present.", elementName));
+            LOG.debug(String.format("Couldn't postprocess field %1$s, value is null.", elementName));
             return;
         }
 

@@ -70,60 +70,51 @@ public class LogParser extends AbstractSourceInfoContainer {
         if (input == null) {
             return;
         }
-
+        
         Matcher m1 = appliedPattern.matcher(input);
-        /** Replace the the null character (%00) to space character (%20), because this character make error during progress.
-         *  A null character can be placed in a URL with %00,
-         *  which (in case of unchecked user input) creates a vulnerability known
-         *  as null byte injection and can lead to security exploits.
-         *  See this to more knowledge:
-         *  http://projects.webappsec.org/w/page/13246949/Null%20Byte%20Injection
-         */
-        input = input.replaceAll("%00", "%20");
+        if (!m1.matches() || attributesList.size() != m1.groupCount()) {
+            // Not match the line to expected format.
+            throw new InputMismatchException(String.format(
+                    "Log format mismatch, weblog parser is unable to parse line:\n '%1$s'\n", input));
+        }
 
-            if (!m1.matches() || attributesList.size() != m1.groupCount()) {
-                // Not match the line to expected format.
-                throw new InputMismatchException(String.format(
-                        "Logformat/logentries mismatch. <Weblog-parser-source> is not able to parse line:\n '%1$s'\n", input));
-            }
+        for (int i = 1; i != m1.groupCount() + 1; i++) {
 
-            for (int i = 1; i != m1.groupCount() + 1; i++) {
+            String processedItem = m1.group(i);
+            LogAttribute logAttribute = attributesList.get(i - 1);
 
-                String processedItem = m1.group(i);
-                LogAttribute logAttribute = attributesList.get(i - 1);
+            Field f = new Field(logAttribute.getAttributeAlias(), processedItem);
+            result.add(f);
 
-                Field f = new Field(logAttribute.getAttributeAlias(), processedItem);
-                result.add(f);
+            List<ImmutablePostProcessType> postprocessors = logAttribute.getPostprocessors();
 
-                List<ImmutablePostProcessType> postprocessors = logAttribute.getPostprocessors();
+            // Apply each log attribute postprocessor
+            for (ImmutablePostProcessType p : postprocessors) {
+                PostProcessEnumType pType = p.getType();
+                if (PostProcessEnumType.NONE != pType) {
+                    PostProcessor postprocessor = PostProcessorFactory.get(pType);
+                    String elementName = getElementName(logAttribute, p);
 
-                // Apply each log attribute postprocessor
-                for (ImmutablePostProcessType p : postprocessors) {
-                    PostProcessEnumType pType = p.getType();
-                    if (PostProcessEnumType.NONE != pType) {
-                        PostProcessor postprocessor = PostProcessorFactory.get(pType);
-                        String elementName = getElementName(logAttribute, p);
-
-                        // Check if a given postprocessor implement a CharcodingInterface or not,
-                        // than - if less one of the charactersets is setted - it will set the charactersets
-                        // trought the CharcodingInterface.
-                        if (postprocessor instanceof CharcodingInterface) {
-                            ((CharcodingInterface) postprocessor).setCharset(userdefined_charset);
-                            ((CharcodingInterface) postprocessor).setCharset2(userdefined_charset2);
-                        }
-
-                        // Set the createUrlParameter to the UrlParamsPostProcessor if it is given by user.
-                        // The default is true.
-                        if (postprocessor instanceof UrlParamsPostProcessor) {
-                            ((UrlParamsPostProcessor) postprocessor).setUserCreateParameterFiled(creteUrlParameters);
-                        }
-
-                        postprocessor.doPostProcess(elementName,
-                                BlockUtils.getValue(elementName, result, null), p.getFieldList(),
-                                result, p.isCaching() != null?p.isCaching():DEFAULT_CACHING);
+                    // Check if a given postprocessor implement a CharcodingInterface or not,
+                    // than - if less one of the charactersets is setted - it will set the charactersets
+                    // trought the CharcodingInterface.
+                    if (postprocessor instanceof CharcodingInterface) {
+                        ((CharcodingInterface) postprocessor).setCharset(userdefined_charset);
+                        ((CharcodingInterface) postprocessor).setCharset2(userdefined_charset2);
                     }
+
+                    // Set the createUrlParameter to the UrlParamsPostProcessor if it is given by user.
+                    // The default is true.
+                    if (postprocessor instanceof UrlParamsPostProcessor) {
+                        ((UrlParamsPostProcessor) postprocessor).setUserCreateParameterFiled(creteUrlParameters);
+                    }
+
+                    postprocessor.doPostProcess(elementName,
+                            BlockUtils.getValue(elementName, result, null), p.getFieldList(),
+                            result, p.isCaching() != null?p.isCaching():DEFAULT_CACHING);
                 }
             }
+        }
 
     }
 

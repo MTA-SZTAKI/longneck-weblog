@@ -24,7 +24,7 @@ abstract public class AbstractCachingPostProcessor {
         threadLocalCache.get().put(key, value);
     }
 
-    //@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     protected void initCache() {
         threadLocalCache = new ThreadLocal<Map<String, List<Field>>>() {
             @Override
