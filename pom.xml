@@ -3,7 +3,7 @@
 
   <groupId>hu.sztaki.ilab.longneck</groupId>
   <artifactId>longneck-weblog</artifactId>
-  <version>1.6.2-SNAPSHOT</version>
+  <version>1.6.2</version>
   <packaging>jar</packaging>
 
   <name>longneck-weblog</name>
@@ -51,14 +51,13 @@
 
   <scm>
     <connection>scm:git:git@github.com:MTA-SZTAKI/longneck-weblog.git</connection>
-    <url>https://github.com/MTA-SZTAKI/longneck-weblog.git</url>
-    <developerConnection>scm:git:git@github.com:MTA-SZTAKI/longneck-weblog.git</developerConnection>
+    <url>https://github.com/MTA-SZTAKI/longneck-weblog</url>
   </scm>
 
   <distributionManagement>
     <repository>
       <id>longneck</id>
-      <url>dav:http://longneck.sztaki.hu/maven/</url>
+      <url>http://longneck.sztaki.hu/maven/</url>
     </repository>
   </distributionManagement>
 
@@ -193,6 +192,13 @@
         </executions>
       </plugin>
     </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav-jackrabbit</artifactId>
+        <version>2.4</version>
+      </extension>
+    </extensions>     
   </build>
 
 </project>

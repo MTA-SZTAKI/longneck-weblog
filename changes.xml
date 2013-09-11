@@ -6,6 +6,15 @@
     <title>longneck-weblog changelog</title>
   </properties>
   <body>
-    
+    <release version="1.6.2" date="2013-09-11" description="Initial GitHub release.">
+      <action dev="molnarp" type="fix">
+        Moved default properties to the correct location.
+        Fixed exception text and reduced it's priority.
+        Removed the replacement of %00 encoded zero characters, now handled in the process.            
+      </action>
+      <action dev="lukacsg" type="fix">
+        Fixed bug caused by empty url parameters.
+      </action>
+    </release>
   </body>
 </document>
