@@ -9,25 +9,26 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element name="log-config" type="parser:nonempty-type" />
-        <!--default url-decoding-charset is UTF-8-->
+        <!--the default value of url-decoding-charset is UTF-8-->
         <xs:element name="url-decoding-charset" type="parser:url-decoding-charset-enum-type" minOccurs="0" maxOccurs="1"/>
-        <!--default it isn't another decoding caharacterset. It functioned independent from the url-decoding-charset,
-        it is possible to give only url-decoding-charset2 coding, that default codig will remain UTF-8. -->
+        <!-- We may provide a secondary decoding charset, resulting in new fields according
+             to the new encoding, processed independently of the url-decoding-charset.
+             It is possible to provide url-decoding-charset2 only, then the default encodig will remain UTF-8. -->
         <xs:element name="url-decoding-charset2" type="parser:url-decoding-charset-enum-type" minOccurs="0" maxOccurs="1"/>
-        <!--default create-url-parametes is true-->
+        <!-- the default value of create-url-parametes is true-->
         <xs:element name="create-url-parameters" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
         <xs:element ref="parser:log-elements"  minOccurs="0" maxOccurs="1"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  
+
   <xs:simpleType name="url-decoding-charset-enum-type">
     <xs:restriction base="xs:string">
       <!--Seven-bit ASCII, a.k.a. ISO646-US, a.k.a. the Basic Latin block of the Unicode character set-->
       <xs:enumeration value="US-ASCII"></xs:enumeration>
       <!--ISO Latin Alphabet No. 1, a.k.a. ISO-LATIN-1-->
       <xs:enumeration value="ISO-8859-1"></xs:enumeration>
-      <!-- DEFAULT!!! Eight-bit UCS Transformation Format-->
+      <!-- DEFAULT: Eight-bit UCS Transformation Format-->
       <xs:enumeration value="UTF-8"></xs:enumeration>
       <!--Sixteen-bit UCS Transformation Format, big-endian byte order-->
       <xs:enumeration value="UTF-16BE"></xs:enumeration>

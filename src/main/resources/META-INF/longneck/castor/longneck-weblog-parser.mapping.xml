@@ -5,7 +5,7 @@
   <!-- weblog parser source -->
   <c:class name="hu.sztaki.ilab.longneck.weblog.parser.WeblogParserSource">
     <c:map-to xml="weblog-parser-source" ns-uri="urn:hu.sztaki.ilab.longneck:1.0"/>
-      
+
 	<c:field name="name" type="string">
       <c:bind-xml name="name" node="attribute" />
     </c:field>
@@ -14,12 +14,12 @@
   <!-- weblog file source -->
   <c:class name="hu.sztaki.ilab.longneck.weblog.parser.WeblogFileSource">
     <c:map-to xml="weblog-file-source" ns-uri="urn:hu.sztaki.ilab.longneck:1.0"/>
-      
+
 	<c:field name="name" type="string">
       <c:bind-xml name="name" node="attribute" />
     </c:field>
   </c:class>
-  
+
   <!-- weblog line processor -->
   <c:class name="hu.sztaki.ilab.longneck.process.block.WeblogLine"
       extends="hu.sztaki.ilab.longneck.process.block.AbstractAtomicBlock">
