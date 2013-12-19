@@ -9,6 +9,9 @@
 	<c:field name="name" type="string">
       <c:bind-xml name="name" node="attribute" />
     </c:field>
+    <c:field name="path" type="string">
+      <c:bind-xml name="path" node="attribute" />
+    </c:field>
   </c:class>
 
   <!-- weblog file source -->
@@ -17,6 +20,9 @@
 
 	<c:field name="name" type="string">
       <c:bind-xml name="name" node="attribute" />
+    </c:field>
+	<c:field name="path" type="string">
+      <c:bind-xml name="path" node="attribute" />
     </c:field>
   </c:class>
 

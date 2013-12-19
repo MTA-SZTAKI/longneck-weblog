@@ -6,7 +6,8 @@
   
   <!-- weblog source attribute group -->
   <xs:attributeGroup name="weblogSourcerAttrGroup">
-    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="optional"/>
+    <xs:attribute name="path" type="xs:string" use="optional"/>
   </xs:attributeGroup>
 
   <xs:complexType name="weblogSourceType">

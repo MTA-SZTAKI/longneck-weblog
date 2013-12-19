@@ -19,8 +19,11 @@ abstract public class AbstractLogFileSource implements Source {
 	/** Indicates source-path set to standard input. */
 	public static final String STDIN = "stdin";
 
-    /** The name of the source for identification. */
+    /** The name of the source for identification from property. */
     protected String name;
+    
+    /** The name of the source for identification. */
+    private String path;
 
 	/** List of paths to read log files from. */
 	protected List<String> sourcePath;
@@ -34,8 +37,16 @@ abstract public class AbstractLogFileSource implements Source {
     @Override
     public void init() {
         // Set source path
-        setSourcePath(runtimeProperties.getProperty(
-                String.format("weblog.source.%1$s.sourcePath", name)));
+        if (path == null) {
+            setSourcePath(runtimeProperties.getProperty(
+                    String.format("weblogSource.%1$s.Path", name)));
+        } else {
+            setSourcePath(path);
+        }
+        
+         if (sourcePath == null || "".equals(sourcePath)) {
+            throw new RuntimeException(name!= null?String.format("weblogSource.%1$s.Path is undefined.", name):"Path is undefined");
+        }
 
         // Initialize buffered reader
 		try {
@@ -64,6 +75,14 @@ abstract public class AbstractLogFileSource implements Source {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public Properties getRuntimeProperties() {
