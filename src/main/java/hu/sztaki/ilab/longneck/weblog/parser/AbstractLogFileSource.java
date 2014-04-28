@@ -39,13 +39,14 @@ abstract public class AbstractLogFileSource implements Source {
         // Set source path
         if (path == null) {
             setSourcePath(runtimeProperties.getProperty(
-                    String.format("weblogSource.%1$s.Path", name)));
+                    String.format("weblogSource.%1$s.path", name)));
         } else {
             setSourcePath(path);
         }
         
          if (sourcePath == null || "".equals(sourcePath)) {
-            throw new RuntimeException(name!= null?String.format("weblogSource.%1$s.Path is undefined.", name):"Path is undefined");
+            throw new RuntimeException(name!= null ? 
+                    String.format("weblogSource.%1$s.path is undefined.", name):"Path is undefined");
         }
 
         // Initialize buffered reader
